@@ -1,3 +1,5 @@
+const tokenUi = ''
+
 export default (socketClient, ui) => {
   socketClient.on('broadcastStore', store => {
     ui.store.innerHTML = '';
@@ -29,4 +31,17 @@ export default (socketClient, ui) => {
       `;
     });
   });
+
+  socketClient.on('successLogi', (token) => {
+    ui.updateClientData(token)
+    ui.loginForm.style.display = 'none';
+    ui.wall.style.display = 'block'
+  })
+
+  socketClient.on('expiro', msg => {
+    console.log(msg)
+    ui.loginForm.style.display = 'block';
+    ui.wall.style.display = 'none'
+  })
+
 };
