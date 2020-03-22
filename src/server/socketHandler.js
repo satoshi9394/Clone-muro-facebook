@@ -49,23 +49,6 @@ export default (io, store) => socket => {
     }  
   });
 
-  socket.on('change_username', (data) => {
-    console.log(data)
-    const token = data.token
-    console.log(token)
-    try{
-      if(validateToken(token)) {
-        console.log('entre a token')
-      }else{
-        console.log('fallo validar token')
-      }
-    }catch (err) {
-      console.log('fallo',err.message)
-      io.emit('expiro', 'Expiro el token')
-    }  
-    username = data.username;
-  });
-
   socket.on('sendLike', ( like, token ) => {
     console.log(like)
     console.log(token)

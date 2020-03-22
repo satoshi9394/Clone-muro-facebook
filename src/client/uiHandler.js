@@ -2,8 +2,7 @@ export default socketClient => {
   const storeText = document.getElementById('store-text');
   const sendStore = document.getElementById('send-store');
   const store = document.getElementById('store');
-  const userName = document.getElementById('username');
-  const changeUserName = document.getElementById('change-username');
+
 
   const loginForm = document.getElementById('login');
   const userNameLogin = document.getElementById('userName')
@@ -31,10 +30,6 @@ export default socketClient => {
     if (storeText.value.length > 0){
       socketClient.emit('sendStore', storeText.value, clientData.token)
     };
-  });
-
-  changeUserName.addEventListener('click', () => {
-    socketClient.emit('change_username', ( {username: userName.value , token:clientData.token}));
   });
 
   const sendLike = text => {
