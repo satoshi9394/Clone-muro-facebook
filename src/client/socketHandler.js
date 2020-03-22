@@ -39,7 +39,7 @@ export default (socketClient, ui) => {
   })
 
   socketClient.on('expiro', msg => {
-    console.log(msg)
+    console.log(token)
     ui.loginForm.style.display = 'block';
     ui.wall.style.display = 'none'
   })

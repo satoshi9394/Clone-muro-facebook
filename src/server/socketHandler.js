@@ -89,9 +89,22 @@ export default (io, store) => socket => {
       if(validateToken(token)) {
         console.log('entre a token')
         const currentText = store.find(item => item.text === msg.text);
-        if (socket.id === currentText.id) {
+        console.log('antes del if')
+        console.log(currentText)
+        if (username === currentText.username) {
           store = store.filter(item => item.text !== msg.text);
-          io.emit('broadcastStore', store);
+          console.log('entre al if')
+          connection.query('update post set status = 0 where id = ?',
+          [currentText.idDb], (err, result) => {
+            if(!err){
+              console.log(result)
+              io.emit('broadcastStore', store);
+              console.log('lo borre bien')
+            }else{
+              console.log(err)
+              console.log('entre al error')
+            }
+          })
         }
       }else{
         console.log('fallo validar token')
