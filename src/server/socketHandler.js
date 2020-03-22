@@ -15,13 +15,13 @@ export default (io, store, allPostUser) => socket => {
             io.emit('successLogi', token)
           }else{
             console.log('entre a falla de credencial')
-            io.emit('failedLogin', 'password not fout')
+            io.emit('loginIncorrect', 'user or password incorrect')
           }
         }else{
-          io.emit('failedLogin', 'user not fout')
+          io.emit('loginIncorrect', 'user or password incorrect')
         }
       }else{
-        io.emit('failedLogin', err.message)
+        io.emit('loginIncorrect', 'user or password incorrect')
       }
     })
   })

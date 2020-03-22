@@ -5,23 +5,7 @@ html
     title Clone-Facebook
     meta(name="viewport", content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width")
   body.light-blue
-    .container#login
-      label(for="userName") UserName
-      input#userName(placeholder="Ingresa tu usuario")
-      label(for="password") Password
-      input#password(typy="password" placeholder="Ingresa tu password")
-      button#do-login Login
-    .container.teal.darken-3#wall
-      .row
-        .col.s8
-          .card.center-align.deep-orange.accent-1
-            h1 Clone-Facebook
-        .col.s4
-          .card#userMoreActive     
-        .col.s12#new-store
-          textarea#store-text(placeholder="Que estas pensando")
-          button.btn#send-store
-            i.material-icons send
-      .row#store
+    include userLogin.pug  
+    include post.pug
     script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js")
     script(src="./js/main.js")

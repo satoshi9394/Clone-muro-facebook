@@ -40,6 +40,7 @@ export default (socketClient, ui) => {
 
   socketClient.on('expiro', msg => {
     console.log(msg)
+    alert(msg)
     ui.loginForm.style.display = 'block';
     ui.wall.style.display = 'none'
   })
@@ -52,6 +53,11 @@ export default (socketClient, ui) => {
       <P>Total de post: ${item.post}<p>
       `
     }) 
-  } )
+  })
+
+  socketClient.on('loginIncorrect', msg => {
+    console.log(msg)
+    alert(msg)
+  })
 
 };
