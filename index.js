@@ -51,7 +51,7 @@ connection.query('select id, text, idSokect, userName, likes from post where sta
       }
       store.push(data);
     })
-    connection.query('select userName, post from users where post > 0',
+    connection.query('select userName, post from users order by post desc limit 3',
     (err, result)=> {
       if(!err){
         result.forEach(item => {
@@ -66,7 +66,6 @@ connection.query('select id, text, idSokect, userName, likes from post where sta
         console.log(err)
       }
     })
-    //io.on('connection', socketHandler(io, store, allPostUser));
   }else{
     console.log(err)
   }
