@@ -1,6 +1,10 @@
 .container#login
-      label(for="userName") UserName
-      input#userName(placeholder="Ingresa tu usuario")
-      label(for="password") Password
-      input#password(typy="password" placeholder="Ingresa tu password")
-      button#do-login Login
+  .card.blue-grey.darken-4
+    .row.valign-wrapper
+      .col.s6.input-field
+        label(for="userName")
+        input.white-text#userName(placeholder="Ingresa tu usuario")
+      .col.s6.input-field
+        label(for="password")
+        input.white-text#password(type="password" placeholder="Ingresa tu password")  
+      button.btn#do-login Login
