@@ -65,7 +65,16 @@ export default (io, store) => socket => {
         console.log('entre a token')
         const currentText = store.find(item => item.text === like.message);
         currentText.likes += 1;
-        io.emit('broadcastStore', store);
+        connection.query('update post set likes = likes + 1 where id = ?',
+        [currentText.idDb], (err, result) => {
+          if(!err){
+            console.log(result)
+            io.emit('broadcastStore', store);
+          }else{
+            console.log(err)
+            console.log('algo fallo')
+          }
+        })
       }else{
         console.log('fallo validar token')
       }
