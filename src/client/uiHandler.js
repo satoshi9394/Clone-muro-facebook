@@ -34,17 +34,17 @@ export default socketClient => {
   });
 
   changeUserName.addEventListener('click', () => {
-    socketClient.emit('change_username', ({ username: userName.value },clientData.token));
+    socketClient.emit('change_username', ( {username: userName.value , token:clientData.token}));
   });
 
   const sendLike = text => {
     const like = { message: text };
-    socketClient.emit('sendLike', (like, clientData.token));
+    socketClient.emit('sendLike', like, clientData.token);
   };
 
   const sendDelete = (id, text) => {
     const msg = { id: id, text: text };
-    socketClient.emit('deleteMsg', (msg,clientData.token));
+    socketClient.emit('deleteMsg', msg ,clientData.token);
   };
 
   return {

@@ -32,6 +32,14 @@ export default (io, store) => socket => {
     try{
       if(validateToken(token)) {
         console.log('entre a token')
+        const data = {
+          text,
+          id: socket.id,
+          username,
+          likes: 0
+        };
+        store.push(data);
+        io.emit('broadcastStore', store);
       }else{
         console.log('fallo validar token')
       }
@@ -39,17 +47,20 @@ export default (io, store) => socket => {
       console.log('fallo',err.message)
       io.emit('expiro', 'Expiro el token')
     }  
-    const data = {
+    /*const data = {
       text,
       id: socket.id,
       username,
       likes: 0
     };
     store.push(data);
-    io.emit('broadcastStore', store);
+    io.emit('broadcastStore', store);*/
   });
 
-  socket.on('change_username', (data,token) => {
+  socket.on('change_username', (data) => {
+    console.log(data)
+    const token = data.token
+    console.log(token)
     try{
       if(validateToken(token)) {
         console.log('entre a token')
@@ -63,10 +74,15 @@ export default (io, store) => socket => {
     username = data.username;
   });
 
-  socket.on('sendLike', (like,token) => {
+  socket.on('sendLike', ( like, token ) => {
+    console.log(like)
+    console.log(token)
     try{
       if(validateToken(token)) {
         console.log('entre a token')
+        const currentText = store.find(item => item.text === like.message);
+        currentText.likes += 1;
+        io.emit('broadcastStore', store);
       }else{
         console.log('fallo validar token')
       }
@@ -74,15 +90,20 @@ export default (io, store) => socket => {
       console.log('fallo',err.message)
       io.emit('expiro', 'Expiro el token')
     }  
-    const currentText = store.find(item => item.text === like.message);
+    /*const currentText = store.find(item => item.text === like.message);
     currentText.likes += 1;
-    io.emit('broadcastStore', store);
+    io.emit('broadcastStore', store);*/
   });
 
-  socket.on('deleteMsg', (msg,token) => {
+  socket.on('deleteMsg', ( msg ,token ) => {
     try{
       if(validateToken(token)) {
         console.log('entre a token')
+        const currentText = store.find(item => item.text === msg.text);
+        if (socket.id === currentText.id) {
+          store = store.filter(item => item.text !== msg.text);
+          io.emit('broadcastStore', store);
+        }
       }else{
         console.log('fallo validar token')
       }
@@ -90,10 +111,10 @@ export default (io, store) => socket => {
       console.log('fallo',err.message)
       io.emit('expiro', 'Expiro el token')
     }  
-    const currentText = store.find(item => item.text === msg.text);
+    /*const currentText = store.find(item => item.text === msg.text);
     if (socket.id === currentText.id) {
       store = store.filter(item => item.text !== msg.text);
       io.emit('broadcastStore', store);
-    }
+    }*/
   });
 };
