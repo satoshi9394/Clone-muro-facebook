@@ -15,7 +15,7 @@ export default (io, store) => socket => {
             io.emit('successLogi', token)
           }else{
             console.log('entre a falla de credencial')
-            io.emit('failedLogin', 'invalido usuario')
+            io.emit('failedLogin', 'password not fout')
           }
         }else{
           io.emit('failedLogin', 'user not fout')
@@ -38,8 +38,16 @@ export default (io, store) => socket => {
           username,
           likes: 0
         };
-        store.push(data);
-        io.emit('broadcastStore', store);
+        connection.query('insert into post (text, idSokect, userName, likes,status) values(?,?,?,?,?)'
+        ,[ text , socket.id , username , 0 , 1 ], (err, result)=>{
+          if(!err){
+            console.log(result)
+            store.push(data);
+            io.emit('broadcastStore', store);
+          }else{
+            console.log(err)
+          }
+        })
       }else{
         console.log('fallo validar token')
       }

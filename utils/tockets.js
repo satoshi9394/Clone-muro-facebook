@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 
 
 const SALT_ROUNDS = 12;
-const TOKEN_EXPIRATION = 60 * 1;
+const TOKEN_EXPIRATION = 60 * 15;
 const TOKEN_SECRET = 'hola';
 
 
