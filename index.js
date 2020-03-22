@@ -8,6 +8,18 @@ import connection from './dataBase/mysql'
 
 //variable global 
 const store = [];
+const allPostUser = []; 
+
+/*let allPostUser = [
+  {
+    username: 'angel',
+    post: '4'
+  },
+  {
+    username: 'juan',
+    post: '3'
+  }
+]*/
 
 const APP = express();
 
@@ -39,7 +51,22 @@ connection.query('select id, text, idSokect, userName, likes from post where sta
       }
       store.push(data);
     })
-    io.on('connection', socketHandler(io, store));
+    connection.query('select userName, post from users where post > 0',
+    (err, result)=> {
+      if(!err){
+        result.forEach(item => {
+          const data = {
+            username: item.userName,
+            post: item.post
+          }
+          allPostUser.push(data)
+        })
+        io.on('connection', socketHandler(io, store, allPostUser));
+      }else{
+        console.log(err)
+      }
+    })
+    //io.on('connection', socketHandler(io, store, allPostUser));
   }else{
     console.log(err)
   }

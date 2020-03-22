@@ -2,6 +2,7 @@ export default socketClient => {
   const storeText = document.getElementById('store-text');
   const sendStore = document.getElementById('send-store');
   const store = document.getElementById('store');
+  const post = document.getElementById('userMoreActive');
 
 
   const loginForm = document.getElementById('login');
@@ -48,6 +49,7 @@ export default socketClient => {
     store,
     wall,
     loginForm,
-    updateClientData
+    updateClientData,
+    post
   };
 };

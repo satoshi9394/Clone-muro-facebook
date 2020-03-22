@@ -39,9 +39,19 @@ export default (socketClient, ui) => {
   })
 
   socketClient.on('expiro', msg => {
-    console.log(token)
+    console.log(msg)
     ui.loginForm.style.display = 'block';
     ui.wall.style.display = 'none'
   })
+
+  socketClient.on('postUser', allPostUser => {
+    ui.post.innerHTML = '';
+    allPostUser.forEach(item => {
+      ui.post.innerHTML += `
+      <p>${item.username}<p>
+      <P>Total de post: ${item.post}<p>
+      `
+    }) 
+  } )
 
 };

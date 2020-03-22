@@ -1,7 +1,7 @@
 import connection from '../../dataBase/mysql'
 import {matchHash , createToken, validateToken } from '../../utils/tockets'
 
-export default (io, store) => socket => {
+export default (io, store, allPostUser) => socket => {
   let username = 'Anonimo';
 
   socket.on('DoLogin', (data)=> {
@@ -28,6 +28,8 @@ export default (io, store) => socket => {
 
   if (store.length > 0) io.emit('broadcastStore', store);
 
+  if(allPostUser.length) io.emit('postUser', allPostUser)
+
   socket.on('sendStore', (text,token) => {
     try{
       if(validateToken(token)) {
@@ -38,6 +40,14 @@ export default (io, store) => socket => {
           username,
           likes: 0
         };
+        connection.query('update users set post= post + 1 where userName=?'
+        ,[username],(err, result)=> {
+          if(!err){
+            console.log(result)
+          }else{
+            console.log(err)
+          }
+        })
         connection.query('insert into post (text, idSokect, userName, likes,status) values(?,?,?,?,?)'
         ,[ text , socket.id , username , 0 , 1 ], (err, result)=>{
           if(!err){
